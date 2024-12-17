@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Definitions\BaseDefinition;
-use App\Models\Definitions\SourceDefinition;
+use App\Models\Definitions\CategoryDefinition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(SourceDefinition::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(CategoryDefinition::TABLE_NAME, function (Blueprint $table) {
             $table->uuid(BaseDefinition::ID)->primary();
 
-            $table->string(SourceDefinition::NAME);
-            $table->text(SourceDefinition::DESCRIPTION)->nullable();
-            $table->string(SourceDefinition::URL)->nullable();
-            $table->string(SourceDefinition::REMOTE_ID);
+            $table->string(CategoryDefinition::NAME);
+            $table->string(CategoryDefinition::REMOTE_ID);
 
             $table->timestamps();
             $table->softDeletes();
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists(SourceDefinition::TABLE_NAME);
+        Schema::dropIfExists(CategoryDefinition::TABLE_NAME);
     }
 };

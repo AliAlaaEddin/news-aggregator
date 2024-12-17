@@ -12,6 +12,7 @@ class ArticlesDefinition extends BaseDefinition {
     public const PUBLISHED_AT = 'published_at';
     public const AUTHOR_ID = 'author_id';
     public const SOURCE_ID = 'source_id';
+    public const CATEGORY_ID = 'category_id';
 
     public const FILLABLE = [
         self::TITLE,
@@ -20,6 +21,7 @@ class ArticlesDefinition extends BaseDefinition {
         self::PUBLISHED_AT,
         self::AUTHOR_ID,
         self::SOURCE_ID,
+        self::CATEGORY_ID,
     ];
 
     public const CASTS = [

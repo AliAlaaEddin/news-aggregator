@@ -3,6 +3,7 @@
 use App\Models\Definitions\ArticlesDefinition;
 use App\Models\Definitions\AuthorDefinition;
 use App\Models\Definitions\BaseDefinition;
+use App\Models\Definitions\CategoryDefinition;
 use App\Models\Definitions\SourceDefinition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -33,7 +34,10 @@ return new class extends Migration
                 ->on(SourceDefinition::TABLE_NAME)
                 ->cascadeOnDelete();
 
-            // TODO Complete This migration Add Category
+            $table->foreignUuid(ArticlesDefinition::CATEGORY_ID)
+                ->references(BaseDefinition::ID)
+                ->on(CategoryDefinition::TABLE_NAME)
+                ->cascadeOnDelete();
 
             $table->timestamps();
             $table->softDeletes();

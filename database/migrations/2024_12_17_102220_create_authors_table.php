@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string(AuthorDefinition::NAME);
             $table->text(AuthorDefinition::BIO)->nullable();
             $table->string(AuthorDefinition::IMAGE_URL,2048)->nullable();
+            $table->string(AuthorDefinition::REMOTE_ID);
 
             $table->timestamps();
             $table->softDeletes();
