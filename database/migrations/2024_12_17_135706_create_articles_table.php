@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Definitions\ArticlesDefinition;
-use App\Models\Definitions\AuthorDefinition;
-use App\Models\Definitions\BaseDefinition;
-use App\Models\Definitions\CategoryDefinition;
-use App\Models\Definitions\SourceDefinition;
+use App\Definitions\ArticlesDefinition;
+use App\Definitions\AuthorDefinition;
+use App\Definitions\BaseDefinition;
+use App\Definitions\CategoryDefinition;
+use App\Definitions\SourceDefinition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

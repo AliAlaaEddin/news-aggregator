@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Definitions\ArticlesDefinition;
-use App\Models\Definitions\SourceDefinition;
+use App\Definitions\ArticlesDefinition;
+use App\Definitions\SourceDefinition;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

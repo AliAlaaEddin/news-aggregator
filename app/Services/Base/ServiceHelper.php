@@ -6,6 +6,7 @@ use App\Services\ArticleService;
 use App\Services\AuthorService;
 use App\Services\CategoryService;
 use App\Services\SourceService;
+use App\Vendors\NewsAPI\Services\NewsAPISourceService;
 use SebastianBergmann\Type\StaticType;
 
 class ServiceHelper {
@@ -38,4 +39,10 @@ class ServiceHelper {
         return resolve(SourceService::class);
     }
 
+    /**
+     * @return NewsAPISourceService
+     */
+    public static function newsAPISourceService() : NewsAPISourceService {
+        return resolve(NewsAPISourceService::class);
+    }
 }

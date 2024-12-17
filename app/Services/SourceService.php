@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Definitions\SourceDefinition;
+use App\Enums\NewsProvidersEnum;
+use App\Models\Source;
 use App\Repositories\SourceRepository;
 use App\Services\Base\BaseService;
 
@@ -19,4 +22,30 @@ class SourceService extends BaseService
         parent::__construct($repository);
     }
 
+    /**
+     * @param string $name
+     * @param string $description
+     * @param string $url
+     * @param string $remoteID
+     * @param NewsProvidersEnum $provider
+     * @return Source
+     */
+    public function addSource(
+        string $name,
+        string $description,
+        string $url,
+        string $remoteID,
+        NewsProvidersEnum $provider
+    ) : Source {
+        /** @var Source $source */
+        $source = $this->repository->create([
+            SourceDefinition::NAME => $name,
+            SourceDefinition::DESCRIPTION => $description,
+            SourceDefinition::URL => $url,
+            SourceDefinition::REMOTE_ID => $remoteID,
+            SourceDefinition::PROVIDER => $provider
+        ]);
+
+        return $source;
+    }
 }
