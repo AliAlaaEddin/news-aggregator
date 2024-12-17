@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\AuthorRepository;
+use App\Services\Base\BaseService;
 
 /**
  * @property AuthorRepository $repository

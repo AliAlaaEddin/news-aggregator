@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ArticleRepository;
+use App\Services\Base\BaseService;
 
 /**
  * @property ArticleRepository $repository

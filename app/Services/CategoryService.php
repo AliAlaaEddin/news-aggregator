@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\CategoryRepository;
+use App\Services\Base\BaseService;
 
 
 /**
