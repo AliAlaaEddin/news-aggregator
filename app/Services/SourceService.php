@@ -48,4 +48,16 @@ class SourceService extends BaseService
 
         return $source;
     }
+
+    /**
+     * @return string
+     */
+    public function getNewsAPISources() : string {
+        $sources = $this->repository
+                        ->where(SourceDefinition::PROVIDER,NewsProvidersEnum::NEWS_API)
+                        ->get();
+
+        return $sources->pluck(SourceDefinition::REMOTE_ID)->join(',');
+
+    }
 }

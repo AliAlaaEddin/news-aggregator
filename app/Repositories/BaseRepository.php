@@ -298,12 +298,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Add a simple where clause to the query
      *
      * @param string $column
-     * @param string $value
+     * @param mixed $value
      * @param string $operator
      *
      * @return $this
      */
-    public function where(string $column, string $value, string $operator = '=') : static
+    public function where(string $column, mixed $value, string $operator = '=') : static
     {
         $this->wheres[] = compact('column', 'value', 'operator');
 

@@ -11,7 +11,7 @@ return [
      */
     'urls' => [
         'base' => 'https://newsapi.org/v2',
-        'top_headline' => '/top-headlines',
+        'everything' => '/everything',
         'sources' => '/top-headlines/sources',
     ]
 ];
