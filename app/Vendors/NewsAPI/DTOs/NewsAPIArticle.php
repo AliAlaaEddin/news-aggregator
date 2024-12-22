@@ -9,6 +9,7 @@ class NewsAPIArticle extends Data
 {
 
     /**
+     * @param NewsAPISource $source
      * @param string|null $author
      * @param string $title
      * @param string|null $description
@@ -18,6 +19,7 @@ class NewsAPIArticle extends Data
      * @param string|null $content
      */
     public function __construct(
+        public NewsAPISource $source,
         public ?string $author,
         public string $title,
         public ?string $description,

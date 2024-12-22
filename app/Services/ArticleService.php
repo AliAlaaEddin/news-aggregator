@@ -27,6 +27,7 @@ class ArticleService extends BaseService
      * @param string $content
      * @param string|null $url
      * @param Carbon $publishedAt
+     * @param string $sourceID
      * @return Article
      */
     public function addArticle(
@@ -34,6 +35,8 @@ class ArticleService extends BaseService
         string  $content,
         ?string $url,
         Carbon  $publishedAt,
+        string $sourceID,
+        string $authorID
     ): Article
     {
         /** @var Article $article */
@@ -42,6 +45,8 @@ class ArticleService extends BaseService
             ArticlesDefinition::CONTENT => $content,
             ArticlesDefinition::URL => $url,
             ArticlesDefinition::PUBLISHED_AT => $publishedAt,
+            ArticlesDefinition::SOURCE_ID => $sourceID,
+            ArticlesDefinition::AUTHOR_ID => $authorID,
         ]);
 
         return $article;

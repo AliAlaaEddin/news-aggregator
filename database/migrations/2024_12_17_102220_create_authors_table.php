@@ -2,6 +2,7 @@
 
 use App\Definitions\AuthorDefinition;
 use App\Definitions\BaseDefinition;
+use App\Enums\NewsProvidersEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->text(AuthorDefinition::BIO)->nullable();
             $table->string(AuthorDefinition::IMAGE_URL,2048)->nullable();
             $table->string(AuthorDefinition::REMOTE_ID);
+            $table->enum(AuthorDefinition::PROVIDER, array_map(fn($case) => $case->value, NewsProvidersEnum::cases()));
 
             $table->timestamps();
             $table->softDeletes();

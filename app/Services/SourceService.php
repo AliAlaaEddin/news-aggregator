@@ -60,4 +60,20 @@ class SourceService extends BaseService
         return $sources->pluck(SourceDefinition::REMOTE_ID)->join(',');
 
     }
+
+    /**
+     * @param NewsProvidersEnum $newsProvider
+     * @param string|null $remoteID
+     * @return Source|null
+     */
+    public function getSourceByRemoteID(NewsProvidersEnum $newsProvider, ?string $remoteID) : ?Source
+    {
+        /** @var ?Source $source */
+        $source = $this->repository
+            ->where(SourceDefinition::REMOTE_ID, $remoteID)
+            ->where(SourceDefinition::PROVIDER, $newsProvider)
+            ->first();
+
+        return $source;
+    }
 }

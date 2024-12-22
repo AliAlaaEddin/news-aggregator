@@ -10,12 +10,15 @@ class AuthorDefinition extends BaseDefinition {
     public const BIO = 'bio';
     public const IMAGE_URL = 'image_url';
     public const REMOTE_ID = 'remote_id';
+    public const PROVIDER = 'provider';
+
 
     public const FILLABLE = [
         self::NAME,
         self::BIO,
         self::IMAGE_URL,
-        self::REMOTE_ID
+        self::REMOTE_ID,
+        self::PROVIDER
     ];
 
 }

@@ -2,12 +2,11 @@
 
 namespace App\Vendors\NewsAPI\Services;
 
-use App\Definitions\ArticlesDefinition;
+use App\Definitions\BaseDefinition;
+use App\Enums\NewsProvidersEnum;
 use App\Services\Base\ServiceHelper;
 use App\Vendors\NewsAPI\DTOs\NewsAPIArticle;
-use App\Vendors\NewsAPI\DTOs\NewsAPISource;
 use App\Vendors\NewsAPI\Repositories\NewsAPISearchRepository;
-use App\Vendors\NewsAPI\Repositories\NewsAPISourceRepository;
 
 class NewAPISearchService
 {
@@ -19,34 +18,40 @@ class NewAPISearchService
         $this->newsAPISearchRepository = $newsAPISearchRepository;
     }
 
-    /**
-     * @return NewsAPISource[]
-     */
     public function search(): void
     {
+
         $from = now()->subDay()->subHour()->format('Y-m-d\TH:i:s');
         $to = now()->subDay()->format('Y-m-d\TH:i:s');
-
-        error_log("Searching for $from to $to");
         $page = 1;
-        $perPage = 100;
+        $perPage = 50;
 
-//        do {
+
+        do {
             [$results, $total] = $this->newsAPISearchRepository->searchAll($from, $to, $page, $perPage);
-
 
             /** @var NewsAPIArticle $result */
             foreach ($results as $result) {
-                ServiceHelper::articleService()->addArticle(
-                    $result->title,
-                    $result->content,
-                    $result->url,
-                    $result->publishedAt,
-                    $result->author
-                );
+                if(!$result->source?->id || !$result->author){
+                    continue;
+                }
+
+                $source = ServiceHelper::sourceService()->getSourceByRemoteID(NewsProvidersEnum::NEWS_API, $result->source?->id);
+                $author = ServiceHelper::authorService()->getOrCreateAuthor(NewsProvidersEnum::NEWS_API,$result->author);
+
+                if ($source) {
+                    ServiceHelper::articleService()->addArticle(
+                        $result->title,
+                        $result->content,
+                        $result->url,
+                        $result->publishedAt,
+                        $source[BaseDefinition::ID],
+                        $author[BaseDefinition::ID],
+                    );
+                }
             }
             $page++;
-//        } while ($page <= ceil((float)($total / $perPage)));
+        } while ($page <= ceil((float)(min(100, $total) / $perPage)));
 
 
     }

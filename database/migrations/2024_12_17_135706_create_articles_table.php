@@ -33,11 +33,11 @@ return new class extends Migration
                 ->references(BaseDefinition::ID)
                 ->on(SourceDefinition::TABLE_NAME)
                 ->cascadeOnDelete();
-
-            $table->foreignUuid(ArticlesDefinition::CATEGORY_ID)
-                ->references(BaseDefinition::ID)
-                ->on(CategoryDefinition::TABLE_NAME)
-                ->cascadeOnDelete();
+//
+//            $table->foreignUuid(ArticlesDefinition::CATEGORY_ID)
+//                ->references(BaseDefinition::ID)
+//                ->on(CategoryDefinition::TABLE_NAME)
+//                ->cascadeOnDelete();
 
             $table->timestamps();
             $table->softDeletes();

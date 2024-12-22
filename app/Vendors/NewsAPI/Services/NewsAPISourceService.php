@@ -2,7 +2,7 @@
 
 namespace App\Vendors\NewsAPI\Services;
 
-use App\Vendors\NewsAPI\DTOs\NewsAPISource;
+use App\Vendors\NewsAPI\DTOs\NewsAPIExtendedSource;
 use App\Vendors\NewsAPI\Repositories\NewsAPISourceRepository;
 
 class NewsAPISourceService {
@@ -14,7 +14,7 @@ class NewsAPISourceService {
     }
 
     /**
-     * @return NewsAPISource[]
+     * @return NewsAPIExtendedSource[]
      */
     public function getNewsAPISources() : array {
         return $this->newsAPISourceRepository->getAllSources();

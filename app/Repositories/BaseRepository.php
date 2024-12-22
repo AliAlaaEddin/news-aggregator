@@ -196,13 +196,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Get the first specified model record from the database
      *
-     * @return Model
+     * @return Model|null
      */
-    public function first() : Model
+    public function first() : ?Model
     {
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
 
-        $model = $this->query->firstOrFail();
+        $model = $this->query->first();
 
         $this->unsetClauses();
 

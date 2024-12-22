@@ -2,7 +2,7 @@
 
 namespace App\Vendors\NewsAPI\DTOs\Responses;
 
-use App\Vendors\NewsAPI\DTOs\NewsAPISource;
+use App\Vendors\NewsAPI\DTOs\NewsAPIExtendedSource;
 use Spatie\LaravelData\Data;
 
 class NewsAPISourcesResponse extends Data
@@ -10,7 +10,7 @@ class NewsAPISourcesResponse extends Data
 
     /**
      * @param string $status
-     * @param NewsAPISource[] $sources
+     * @param NewsAPIExtendedSource[] $sources
      */
     public function __construct(
         public string $status,
