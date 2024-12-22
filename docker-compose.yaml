@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: news-aggregator
+    ports:
+      - "8000:8000"
+## Activate this for interactive development without re-building the whole image
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: laravel-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: news_aggregator
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
