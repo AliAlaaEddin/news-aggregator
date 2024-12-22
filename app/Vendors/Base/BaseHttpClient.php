@@ -11,19 +11,28 @@ class BaseHttpClient {
 
     protected PendingRequest $authenticatedClient;
 
-    public function __construct(string $baseUrl,array $headers = [])
+    public function __construct(string $baseUrl,array $headers = [],array $queryParams = [])
     {
-        $this->authenticatedClient = Http::withHeaders($headers)->baseUrl($baseUrl);
+        $this->authenticatedClient = Http::withHeaders($headers)->withQueryParameters($queryParams)->baseUrl($baseUrl);
     }
 
     /**
      * @param string $url
+     * @param array|null $queryParams
      * @return Response|null
      */
-    protected function get(string $url) : ?Response
+    protected function get(string $url,?array $queryParams = []) : ?Response
     {
         try {
-            return $this->authenticatedClient->get($url);
+
+            $clonedClient = clone $this->authenticatedClient;
+
+            $result = $clonedClient->withQueryParameters($queryParams)->get($url);
+
+            unset($clonedClient);
+
+            return $result;
+
         } catch (ConnectionException $exception) {
             logger()->error($exception->getMessage());
             return null;

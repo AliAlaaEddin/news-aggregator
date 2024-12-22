@@ -3,6 +3,9 @@
 namespace App\Vendors\NewsAPI\DTOs;
 
 
+use App\Enums\NewsProvidersEnum;
+use App\Vendors\Base\DTOs\SourceDTO;
+
 class NewsAPIExtendedSource extends NewsAPISource
 {
 
@@ -25,6 +28,20 @@ class NewsAPIExtendedSource extends NewsAPISource
         public string $country,
     ) {
         parent::__construct($id, $name);
+    }
+
+    /**
+     * @param NewsAPIExtendedSource $source
+     * @return SourceDTO
+     */
+    public static function toSourceDTO(self $source) : SourceDTO {
+        return new SourceDTO(
+            NewsProvidersEnum::NEWS_API,
+            $source->name,
+            $source->description,
+            $source->url,
+            $source->id,
+        );
     }
 
 }

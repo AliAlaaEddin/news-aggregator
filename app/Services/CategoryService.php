@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Definitions\CategoryDefinition;
+use App\Enums\NewsProvidersEnum;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use App\Services\Base\BaseService;
@@ -27,13 +28,15 @@ class CategoryService extends BaseService {
      * @return Category
      */
     public function addCategory(
+        NewsProvidersEnum $provider,
         string $name,
-        string $remoteID
+        string $remoteID,
     ) : Category {
         /** @var Category $category */
         $category = $this->repository->create([
             CategoryDefinition::NAME => $name,
-            CategoryDefinition::REMOTE_ID => $remoteID
+            CategoryDefinition::REMOTE_ID => $remoteID,
+            CategoryDefinition::PROVIDER => $provider
         ]);
 
         return $category;

@@ -22,20 +22,21 @@ class SourceService extends BaseService
         parent::__construct($repository);
     }
 
+
     /**
-     * @param string $name
-     * @param string $description
-     * @param string $url
-     * @param string $remoteID
      * @param NewsProvidersEnum $provider
+     * @param string $name
+     * @param string|null $description
+     * @param string|null $url
+     * @param string|null $remoteID
      * @return Source
      */
     public function addSource(
+        NewsProvidersEnum $provider,
         string $name,
-        string $description,
-        string $url,
-        string $remoteID,
-        NewsProvidersEnum $provider
+        ?string $description = null,
+        ?string $url = null,
+        ?string $remoteID = null,
     ) : Source {
         /** @var Source $source */
         $source = $this->repository->create([

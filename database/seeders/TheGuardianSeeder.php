@@ -4,20 +4,11 @@ namespace Database\Seeders;
 
 use App\Enums\NewsProvidersEnum;
 use App\Services\Base\ServiceHelper;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class NewsAPISeeder extends Seeder
+class TheGuardianSeeder extends Seeder
 {
-    private array $categories = [
-        'business',
-        'entertainment',
-        'general',
-        'health',
-        'science',
-        'sports',
-        'technology'
-    ];
-
     /**
      * Run the database seeds.
      */
@@ -28,15 +19,17 @@ class NewsAPISeeder extends Seeder
         $this->addSources();
     }
 
+
     /**
      * @return void
      */
     private function addCategories(): void {
-        foreach ($this->categories as $category) {
+        $categories = ServiceHelper::theGuardianService()->getCategories();
+        foreach ($categories as $category) {
             ServiceHelper::categoryService()->addCategory(
-                NewsProvidersEnum::NEWS_API,
-                $category,
-                $category,
+                NewsProvidersEnum::THE_GUARDIAN,
+                $category->webTitle,
+                $category->id,
             );
         }
     }
@@ -45,14 +38,12 @@ class NewsAPISeeder extends Seeder
      * @return void
      */
     private function addSources(): void {
-        $sources = ServiceHelper::newsAPIService()->getSources();
+        $sources = ServiceHelper::theGuardianService()->getSources();
         foreach ($sources as $source) {
             ServiceHelper::sourceService()->addSource(
-                $source->provider,
-                $source->name,
-                $source->description,
-                $source->url,
-                $source->remoteID,
+                NewsProvidersEnum::THE_GUARDIAN,
+                $source,
+                remoteID: $source
             );
         }
     }

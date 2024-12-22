@@ -6,9 +6,8 @@ use App\Services\ArticleService;
 use App\Services\AuthorService;
 use App\Services\CategoryService;
 use App\Services\SourceService;
-use App\Vendors\NewsAPI\Services\NewAPISearchService;
-use App\Vendors\NewsAPI\Services\NewsAPISourceService;
-use SebastianBergmann\Type\StaticType;
+use App\Vendors\NewsAPI\Services\NewsAPIService;
+use App\Vendors\TheGuardian\Services\TheGuardianService;
 
 class ServiceHelper {
 
@@ -41,16 +40,17 @@ class ServiceHelper {
     }
 
     /**
-     * @return NewsAPISourceService
+     * @return NewsAPIService
      */
-    public static function newsAPISourceService() : NewsAPISourceService {
-        return resolve(NewsAPISourceService::class);
+    public static function newsAPIService() : NewsAPIService {
+        return resolve(NewsAPIService::class);
     }
 
     /**
-     * @return NewAPISearchService
+     * @return TheGuardianService
      */
-    public static function newAPISearchService() : NewAPISearchService {
-        return resolve(NewAPISearchService::class);
+    public static function theGuardianService() : TheGuardianService {
+        return resolve(TheGuardianService::class);
     }
+
 }
