@@ -2,6 +2,9 @@
 
 namespace App\Vendors\TheGuardian\DTOs;
 
+use App\Enums\NewsProvidersEnum;
+use App\Vendors\Base\DTOs\ArticleDTO;
+use App\Vendors\Base\DTOs\AuthorDTO;
 use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 
@@ -34,10 +37,37 @@ class TheGuardianArticle extends Data {
         public bool $isHosted,
         public string $pillarId,
         public string $pillarName,
-    )
-    {
+    ) { }
 
+    /**
+     * @param TheGuardianArticle $theGuardianArticle
+     * @return ArticleDTO
+     */
+    public static function toArticleDTO(self $theGuardianArticle) : ArticleDTO {
+        $authors = [];
+
+        /** @var TheGuardianTag $tag */
+        foreach ($theGuardianArticle->tags as $tag) {
+            if($tag->type == 'contributor') {
+                $authors[] = new AuthorDTO(
+                    NewsProvidersEnum::THE_GUARDIAN,
+                    $tag->webTitle,
+                    $tag->bio,
+                    $tag->bylineImageUrl,
+                    $tag->id
+                );
+            }
+        }
+
+        return new ArticleDTO(
+            NewsProvidersEnum::THE_GUARDIAN,
+            $theGuardianArticle->webTitle,
+            null,
+            $theGuardianArticle->webUrl,
+            $theGuardianArticle->webPublicationDate,
+            NewsProvidersEnum::THE_GUARDIAN->value,
+            $authors
+        );
     }
-
 
 }

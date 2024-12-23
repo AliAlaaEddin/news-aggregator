@@ -41,6 +41,7 @@ class AuthorService extends BaseService
     /**
      * @param NewsProvidersEnum $newsProviders
      * @param string $name
+     * @param string|null $remoteID
      * @param string|null $bio
      * @param string|null $image
      * @return Author
@@ -72,16 +73,28 @@ class AuthorService extends BaseService
     /**
      * @param NewsProvidersEnum $newsProviders
      * @param string $authorName
+     * @param string|null $remoteID
+     * @param string|null $bio
+     * @param string|null $image
      * @return Author
      */
-    public function getOrCreateAuthor(NewsProvidersEnum $newsProviders,string $authorName) : Author {
+    public function getOrCreateAuthor(
+        NewsProvidersEnum $newsProviders,
+        string $authorName,
+        ?string $remoteID = null,
+        ?string $bio = null,
+        ?string $image = null
+    ) : Author {
 
         $author = $this->getAuthorByName($authorName);
 
         if(!$author) {
             $author = $this->addAuthor(
                 $newsProviders,
-                $authorName
+                $authorName,
+                $remoteID,
+                $bio,
+                $image,
             );
         }
 

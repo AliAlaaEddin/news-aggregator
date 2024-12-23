@@ -4,15 +4,16 @@ namespace App\Vendors\TheGuardian\Repositories;
 
 use App\Vendors\TheGuardian\DTOs\Responses\TheGuardianSearchResponse;
 use App\Vendors\TheGuardian\DTOs\TheGuardianArticle;
+use Carbon\Carbon;
 
 class TheGuardianSearchRepository extends BaseTheGuardianRepository {
 
     /**
-     * @param string $fromDate
+     * @param Carbon $fromDate
      * @param int|null $pageSize
-     * @return array
+     * @return TheGuardianArticle[]
      */
-    public function search(string $fromDate,?int $pageSize = 50) : array {
+    public function search(Carbon $fromDate,?int $pageSize = 50) : array {
 
         $results = [];
         $page = 1;
@@ -21,7 +22,7 @@ class TheGuardianSearchRepository extends BaseTheGuardianRepository {
         do {
             $queryParams = [
                 'show-tags' => 'contributor',
-                'from-date' => $fromDate,
+                'from-date' => $fromDate->toDateString(),
                 'page-size' => $pageSize,
                 'page' => $page
             ];
@@ -32,7 +33,7 @@ class TheGuardianSearchRepository extends BaseTheGuardianRepository {
 
                 $parsedResponse = TheGuardianSearchResponse::from($response->json()['response']);
 
-                $results = array_merge(TheGuardianArticle::collect($parsedResponse->results),$results);
+                $results = array_merge($parsedResponse->results,$results);
 
                 $fetchedAllPages = $page == $parsedResponse->pages;
                 $page++;
@@ -42,7 +43,7 @@ class TheGuardianSearchRepository extends BaseTheGuardianRepository {
         } while (!$fetchedAllPages);
 
 
-        return $results;
+        return TheGuardianArticle::collect($results);
     }
 
 }

@@ -74,12 +74,12 @@ class NewsAPIService implements IBaseNewsProviderServiceInterface
      */
     public function getArticles(Carbon $fromTime, Carbon $toTime): array
     {
-        $results = $this->newsAPISearchRepository->searchAll($fromTime, $toTime);
+        $articles = $this->newsAPISearchRepository->searchAll($fromTime, $toTime);
 
-        $results = array_filter($results,function (NewsAPIArticle $article) {
+        $articles = array_filter($articles,function (NewsAPIArticle $article) {
             return $article->source?->id && $article->author;
         });
 
-        return array_map([NewsAPIArticle::class,'toArticleDTO'],$results);
+        return array_map([NewsAPIArticle::class,'toArticleDTO'],$articles);
     }
 }

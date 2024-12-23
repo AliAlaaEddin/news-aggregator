@@ -5,7 +5,7 @@ This project is built to fetch data from multiple news APIs, store it, and provi
 
 # How to Run The Project
 
-To Run the project using docker,execute the following commands:
+To Run the project using Docker, execute the following commands:
 ``` 
 docker compose build
 docker compose up -d 
@@ -14,10 +14,8 @@ docker compose up -d
 After Docker finishes creating and running the containers you have to generate the `.env` file and run the migrations for the first time by logging into the container and run the following commands
 
 ```
-docker exec -it news-aggregator 
-
+docker exec -it news-aggregator bash
 php artisan env:decrypt
-
 ```
 Here you will be asked for the key to decrypt the env file, please use the one provided in the email. or generate the API keys yourself (check `.env.example`).
 

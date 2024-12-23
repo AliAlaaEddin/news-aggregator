@@ -7,6 +7,7 @@ use App\Vendors\Base\DTOs\ArticleDTO;
 use App\Vendors\Base\DTOs\CategoryDTO;
 use App\Vendors\Base\DTOs\SourceDTO;
 use App\Vendors\Base\IBaseNewsProviderServiceInterface;
+use App\Vendors\TheGuardian\DTOs\TheGuardianArticle;
 use App\Vendors\TheGuardian\DTOs\TheGuardianSection;
 use App\Vendors\TheGuardian\Repositories\TheGuardianSearchRepository;
 use App\Vendors\TheGuardian\Repositories\TheGuardianSectionRepository;
@@ -59,11 +60,13 @@ class TheGuardianService implements IBaseNewsProviderServiceInterface
      */
     public function getArticles(Carbon $fromTime, Carbon $toTime): array
     {
-        $fromDate = now()->toDateString();
-        $articles = $this->theGuardianSearchRepository->search($fromDate);
+        $articles = $this->theGuardianSearchRepository->search($fromTime);
 
+        $articles = array_filter($articles,function (TheGuardianArticle $article) use ($fromTime){
+            return $article->webPublicationDate->isAfter($fromTime);
+        });
 
-        // TODO : Populate Articles Here
+        return array_map([TheGuardianArticle::class,'toArticleDTO'],$articles);
     }
 
 }

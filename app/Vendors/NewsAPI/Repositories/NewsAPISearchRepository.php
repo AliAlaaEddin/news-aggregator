@@ -21,8 +21,10 @@ class NewsAPISearchRepository extends BaseNewsAPIClient
         $sources = ServiceHelper::sourceService()->getNewsAPISources();
 
         $page = 1;
-        $fromDateTime = $from->format('Y-m-d\TH:i:s');
-        $toDateTime = $to->format('Y-m-d\TH:i:s');
+
+        // "->subDay()" is for the dev account limitation
+        $fromDateTime = $from->subDay()->format('Y-m-d\TH:i:s');
+        $toDateTime = $to->subDay()->format('Y-m-d\TH:i:s');
 
         $results = [];
 

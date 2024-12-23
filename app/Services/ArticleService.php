@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Definitions\ArticlesDefinition;
+use App\Definitions\ArticleDefinition;
+use App\Enums\NewsProvidersEnum;
 use App\Models\Article;
 use App\Repositories\ArticleRepository;
 use App\Services\Base\BaseService;
@@ -24,30 +25,34 @@ class ArticleService extends BaseService
 
     /**
      * @param string $title
-     * @param string $content
+     * @param string|null $content
      * @param string|null $url
      * @param Carbon $publishedAt
      * @param string $sourceID
+     * @param array $authorIDs
      * @return Article
      */
     public function addArticle(
+        NewsProvidersEnum $provider,
         string  $title,
-        string  $content,
+        ?string  $content,
         ?string $url,
         Carbon  $publishedAt,
         string $sourceID,
-        string $authorID
+        array $authorIDs
     ): Article
     {
         /** @var Article $article */
         $article = $this->repository->create([
-            ArticlesDefinition::TITLE => $title,
-            ArticlesDefinition::CONTENT => $content,
-            ArticlesDefinition::URL => $url,
-            ArticlesDefinition::PUBLISHED_AT => $publishedAt,
-            ArticlesDefinition::SOURCE_ID => $sourceID,
-            ArticlesDefinition::AUTHOR_ID => $authorID,
+            ArticleDefinition::TITLE => $title,
+            ArticleDefinition::CONTENT => $content,
+            ArticleDefinition::URL => $url,
+            ArticleDefinition::PUBLISHED_AT => $publishedAt,
+            ArticleDefinition::SOURCE_ID => $sourceID,
+            ArticleDefinition::PROVIDER => $provider
         ]);
+
+        $article->authors()->attach($authorIDs);
 
         return $article;
     }

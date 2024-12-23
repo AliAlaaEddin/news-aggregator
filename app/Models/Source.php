@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Definitions\ArticlesDefinition;
+use App\Definitions\ArticleDefinition;
 use App\Definitions\SourceDefinition;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ class Source extends Model
      * @return HasMany
      */
     public function articles(): HasMany {
-        return $this->hasMany(Article::class, ArticlesDefinition::SOURCE_ID);
+        return $this->hasMany(Article::class, ArticleDefinition::SOURCE_ID);
     }
 
 
