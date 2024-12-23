@@ -9,8 +9,8 @@ services:
     ports:
       - "8000:8000"
 ## Activate this for interactive development without re-building the whole image
-    volumes:
-      - .:/var/www
+#    volumes:
+#      - .:/var/www
     depends_on:
       - db
 
