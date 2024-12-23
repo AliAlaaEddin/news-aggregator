@@ -39,6 +39,3 @@ EXPOSE 8000
 
 # Start Supervisor
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

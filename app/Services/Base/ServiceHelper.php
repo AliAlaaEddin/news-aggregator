@@ -6,8 +6,7 @@ use App\Services\ArticleService;
 use App\Services\AuthorService;
 use App\Services\CategoryService;
 use App\Services\SourceService;
-use App\Vendors\NewsAPI\Services\NewsAPIService;
-use App\Vendors\TheGuardian\Services\TheGuardianService;
+use App\Vendors\NewsProvidersManager;
 
 class ServiceHelper {
 
@@ -40,17 +39,11 @@ class ServiceHelper {
     }
 
     /**
-     * @return NewsAPIService
+     * @return NewsProvidersManager
      */
-    public static function newsAPIService() : NewsAPIService {
-        return resolve(NewsAPIService::class);
-    }
-
-    /**
-     * @return TheGuardianService
-     */
-    public static function theGuardianService() : TheGuardianService {
-        return resolve(TheGuardianService::class);
+    public static function newsProvidersManager() : NewsProvidersManager
+    {
+        return resolve(NewsProvidersManager::class);
     }
 
 }

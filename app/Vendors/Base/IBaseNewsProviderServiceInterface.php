@@ -2,8 +2,10 @@
 
 namespace App\Vendors\Base;
 
+use App\Vendors\Base\DTOs\ArticleDTO;
 use App\Vendors\Base\DTOs\CategoryDTO;
 use App\Vendors\Base\DTOs\SourceDTO;
+use Carbon\Carbon;
 
 interface IBaseNewsProviderServiceInterface {
 
@@ -18,9 +20,9 @@ interface IBaseNewsProviderServiceInterface {
     public function getCategories() : array;
 
     /**
-     * @return void
+     * @return ArticleDTO[]
      */
-    public function populateNewsArticles() : void;
+    public function getArticles(Carbon $fromTime, Carbon $toTime) : array;
 
 
 

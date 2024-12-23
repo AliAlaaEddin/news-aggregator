@@ -3,12 +3,14 @@
 namespace App\Vendors\TheGuardian\Services;
 
 use App\Enums\NewsProvidersEnum;
+use App\Vendors\Base\DTOs\ArticleDTO;
 use App\Vendors\Base\DTOs\CategoryDTO;
 use App\Vendors\Base\DTOs\SourceDTO;
 use App\Vendors\Base\IBaseNewsProviderServiceInterface;
 use App\Vendors\TheGuardian\DTOs\TheGuardianSection;
 use App\Vendors\TheGuardian\Repositories\TheGuardianSearchRepository;
 use App\Vendors\TheGuardian\Repositories\TheGuardianSectionRepository;
+use Carbon\Carbon;
 
 class TheGuardianService implements IBaseNewsProviderServiceInterface
 {
@@ -53,9 +55,9 @@ class TheGuardianService implements IBaseNewsProviderServiceInterface
 
 
     /**
-     * @return void
+     * @return ArticleDTO[]
      */
-    public function populateNewsArticles(): void
+    public function getArticles(Carbon $fromTime, Carbon $toTime): array
     {
         $fromDate = now()->toDateString();
         $articles = $this->theGuardianSearchRepository->search($fromDate);

@@ -7,30 +7,53 @@ use App\Vendors\NewsAPI\DTOs\NewsAPIArticle;
 use App\Vendors\NewsAPI\DTOs\Responses\NewsAPIEverythingResponse;
 use Carbon\Carbon;
 
-class NewsAPISearchRepository extends BaseNewsAPIClient {
+class NewsAPISearchRepository extends BaseNewsAPIClient
+{
 
     /**
-     * @param string $from
-     * @param string $to
-     * @param int $page
-     * @param int $perPage
+     * @param Carbon $from
+     * @param Carbon $to
+     * @param int|null $pageSize
      * @return array
      */
-    public function searchAll(string $from,string $to, int $page = 1,int $perPage = 100) : array {
+    public function searchAll(Carbon $from, Carbon $to,?int $pageSize = 50): array
+    {
         $sources = ServiceHelper::sourceService()->getNewsAPISources();
 
+        $page = 1;
+        $fromDateTime = $from->format('Y-m-d\TH:i:s');
+        $toDateTime = $to->format('Y-m-d\TH:i:s');
 
-        $response = $this->get(config('news_api.urls.everything') . "?page=$page&pageSize=$perPage&sources=$sources&from=$from&to=$to");
+        $results = [];
 
-        if(!$response || $response->status() != 200){
-            return [];
-        }
+        do {
 
-        $parsedResponse = NewsAPIEverythingResponse::from($response->json());
-        return [
-            NewsAPIArticle::collect($parsedResponse->articles),
-            $parsedResponse->totalResults
-        ];
+            $queryParams = [
+                'page' => $page,
+                'pageSize' => $pageSize,
+                'sources' => $sources,
+                'from' => $fromDateTime,
+                'to' => $toDateTime
+            ];
+
+            $response = $this->get(config('news_api.urls.everything'), $queryParams);
+
+            if (!$response || $response->status() != 200) {
+                break;
+            }
+
+            $parsedResponse = NewsAPIEverythingResponse::from($response->json());
+            $results = array_merge($results,$parsedResponse->articles);
+
+            $page++;
+            $totalResults = min(100, $parsedResponse->totalResults); // Development Account limitation
+            $fetchedAllPages = $page <= ceil(($totalResults / $pageSize));
+
+        } while ($fetchedAllPages);
+
+        return NewsAPIArticle::collect($results);
     }
+
+
 
 }
