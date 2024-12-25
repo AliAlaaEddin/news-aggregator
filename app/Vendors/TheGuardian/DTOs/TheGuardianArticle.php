@@ -21,8 +21,8 @@ class TheGuardianArticle extends Data {
      * @param string $apiUrl
      * @param null|TheGuardianTag[] $tags
      * @param bool $isHosted
-     * @param string $pillarId
-     * @param string $pillarName
+     * @param ?string $pillarId
+     * @param ?string $pillarName
      */
     public function __construct(
         public string $id,
@@ -35,8 +35,8 @@ class TheGuardianArticle extends Data {
         public string $apiUrl,
         public ?array $tags,
         public bool $isHosted,
-        public string $pillarId,
-        public string $pillarName,
+        public ?string $pillarId,
+        public ?string $pillarName,
     ) { }
 
     /**
@@ -66,6 +66,7 @@ class TheGuardianArticle extends Data {
             $theGuardianArticle->webUrl,
             $theGuardianArticle->webPublicationDate,
             NewsProvidersEnum::THE_GUARDIAN->value,
+            $theGuardianArticle->sectionId,
             $authors
         );
     }

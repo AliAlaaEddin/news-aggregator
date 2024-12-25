@@ -24,11 +24,13 @@ class ArticleService extends BaseService
     }
 
     /**
+     * @param NewsProvidersEnum $provider
      * @param string $title
      * @param string|null $content
      * @param string|null $url
      * @param Carbon $publishedAt
      * @param string $sourceID
+     * @param string $categoryID
      * @param array $authorIDs
      * @return Article
      */
@@ -39,6 +41,7 @@ class ArticleService extends BaseService
         ?string $url,
         Carbon  $publishedAt,
         string $sourceID,
+        string $categoryID,
         array $authorIDs
     ): Article
     {
@@ -49,6 +52,7 @@ class ArticleService extends BaseService
             ArticleDefinition::URL => $url,
             ArticleDefinition::PUBLISHED_AT => $publishedAt,
             ArticleDefinition::SOURCE_ID => $sourceID,
+            ArticleDefinition::CATEGORY_ID => $categoryID,
             ArticleDefinition::PROVIDER => $provider
         ]);
 

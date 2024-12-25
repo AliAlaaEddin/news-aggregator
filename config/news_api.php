@@ -13,5 +13,6 @@ return [
         'base' => 'https://newsapi.org/v2',
         'everything' => '/everything',
         'sources' => '/top-headlines/sources',
+        'top-headlines' => '/top-headlines',
     ]
 ];

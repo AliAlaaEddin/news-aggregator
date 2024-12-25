@@ -30,6 +30,7 @@ class NewsAPIArticle extends Data
         public ?string $urlToImage,
         public Carbon $publishedAt,
         public ?string $content,
+        public ?string $categoryID,
     ) {
 
     }
@@ -47,6 +48,7 @@ class NewsAPIArticle extends Data
             $newsAPIArticle->url,
             $newsAPIArticle->publishedAt,
             $newsAPIArticle->source->id,
+            $newsAPIArticle->categoryID,
             [
                 new AuthorDTO(
                     NewsProvidersEnum::NEWS_API,

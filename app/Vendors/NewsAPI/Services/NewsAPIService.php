@@ -2,7 +2,6 @@
 
 namespace App\Vendors\NewsAPI\Services;
 
-use App\Definitions\BaseDefinition;
 use App\Enums\NewsProvidersEnum;
 use App\Services\Base\ServiceHelper;
 use App\Vendors\Base\DTOs\ArticleDTO;
@@ -74,9 +73,28 @@ class NewsAPIService implements IBaseNewsProviderServiceInterface
      */
     public function getArticles(Carbon $fromTime, Carbon $toTime): array
     {
-        $articles = $this->newsAPISearchRepository->searchAll($fromTime, $toTime);
+        $categories = $this->getCategories();
 
-        $articles = array_filter($articles,function (NewsAPIArticle $article) {
+        // "->subDay()" is for the dev account limitation
+        $fromTime = $fromTime->subDay();
+        $toTime = $toTime->subDay();
+
+        $articles = [];
+        foreach ($categories as $category) {
+            $articles = array_merge($articles,$this->newsAPISearchRepository->topHeadlines($category->remoteID));
+        }
+
+        $articles = array_filter($articles,function (NewsAPIArticle $article) use ($toTime, $fromTime) {
+
+            /**
+             * The condition Should look like this, to filter out the already added articles
+             * however the testing account does not return all the headlines
+             * So for the sake of testing I removed it to always get the data even if it is old
+             *
+             * return $article->source?->id && $article->author && $article->publishedAt->between($fromTime, $toTime);
+             */
+
+
             return $article->source?->id && $article->author;
         });
 

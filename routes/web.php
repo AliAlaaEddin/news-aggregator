@@ -23,6 +23,7 @@ Route::get('/test',function(){
             $authorIDs [] = $authorDBObject[BaseDefinition::ID];
         }
 
+        $category = ServiceHelper::categoryService()->getCategoryByRemoteID($article->provider, $article->categoryRemoteID);
         ServiceHelper::articleService()->addArticle(
             $article->provider,
             $article->title,
@@ -30,6 +31,7 @@ Route::get('/test',function(){
             $article->url,
             $article->publishedAt,
             $source[BaseDefinition::ID],
+            $category[BaseDefinition::ID],
             $authorIDs
         );
     }

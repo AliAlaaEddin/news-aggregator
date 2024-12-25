@@ -5,7 +5,7 @@ namespace App\Vendors\NewsAPI\DTOs\Responses;
 use App\Vendors\NewsAPI\DTOs\NewsAPIArticle;
 use Spatie\LaravelData\Data;
 
-class NewsAPIEverythingResponse extends Data
+class NewsAPIListingResponse extends Data
 {
     /**
      * @param string $status

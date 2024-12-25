@@ -30,7 +30,6 @@ class TheGuardianSearchRepository extends BaseTheGuardianRepository {
             $response = $this->get(config('the_guardian.urls.search'),$queryParams);
 
             if($response->status() == 200){
-
                 $parsedResponse = TheGuardianSearchResponse::from($response->json()['response']);
 
                 $results = array_merge($parsedResponse->results,$results);

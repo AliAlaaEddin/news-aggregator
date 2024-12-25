@@ -42,5 +42,20 @@ class CategoryService extends BaseService {
         return $category;
     }
 
+    /**
+     * @param NewsProvidersEnum $newsProvider
+     * @param string|null $remoteID
+     * @return Category|null
+     */
+    public function getCategoryByRemoteID(NewsProvidersEnum $newsProvider, ?string $remoteID) : ?Category
+    {
+        /** @var ?Category $category */
+        $category = $this->repository
+            ->where(CategoryDefinition::REMOTE_ID, $remoteID)
+            ->where(CategoryDefinition::PROVIDER, $newsProvider)
+            ->first();
+
+        return $category;
+    }
 
 }
